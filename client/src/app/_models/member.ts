@@ -5,7 +5,7 @@ import { Photo } from "./photo";
         id: number;
         username: string;
         photoUrl: string;
-        ages: number;
+        age: number;
         knownAs: string;
         created: Date;
         lastActive: Date;
