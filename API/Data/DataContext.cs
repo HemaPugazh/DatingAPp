@@ -14,5 +14,29 @@ namespace API.Data
         }
         public DbSet<AppUser> Users { get; set; }
 
+        public DbSet<UserLike> Likes { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<UserLike>()
+            .HasKey(k => new  { k.SourceUserId, k.LikeUserId });
+
+            builder.Entity<UserLike>()
+            .HasOne(s=>s.SourceUser)
+            .WithMany(l=>l.LikedUsers)
+            .HasForeignKey(s=>s.SourceUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+            //sql server
+            //important : if you are using SQL server then you need to set the DeleteBehavior here to
+            //DeleteBehavior.NoAction ... or you will get an error during migration
+
+               builder.Entity<UserLike>()
+            .HasOne(s=>s.LikedUser)
+            .WithMany(l=>l.LikedByUsers)
+            .HasForeignKey(s=>s.LikeUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        }
+
     }
 }

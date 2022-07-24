@@ -5,7 +5,6 @@ import { Member } from '../_models/member';
 import { map } from 'rxjs/operators';
 import { of, take } from 'rxjs';
 import { PaginatedResult } from '../_models/pagination';
-import { response } from 'express';
 import { UserParams } from '../_models/userParam';
 import { AccountService } from './account.service';
 import { User } from '../_models/user';
@@ -63,6 +62,7 @@ export class MembersService {
     this.userParams = new UserParams(this.user);
     return this.userParams;
   }
+
   getMember(username: string) {
     const member = [...this.memberCache.values()]
       .reduce((arr, elem) => arr.concat(elem.result), [])
@@ -96,6 +96,16 @@ export class MembersService {
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
+  }
+
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/' + username, {});
+  }
+
+  getLikes(predicate: string, pageNumber, pageSize) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
   }
 
   private getPaginatedResult<T>(url: string, params) {
