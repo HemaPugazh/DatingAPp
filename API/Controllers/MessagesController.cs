@@ -32,8 +32,6 @@ namespace API.Controllers
 
             if (receipient == null) return NotFound();
 
-
-
             var message = new Message
             {
                 Sender = sender,
