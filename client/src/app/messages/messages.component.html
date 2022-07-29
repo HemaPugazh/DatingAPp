@@ -46,14 +46,14 @@
             </td>
             <td>{{message.messageSent | timeago}}</td>
             <td>
-                <button class="btn btn-danger" (click)="$event.stopPropgation()" (click)="deleteMessage(message.id)">Delete</button>
+                <button class="btn btn-danger" (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)">Delete</button>
             </td>
 
         </tr>
     </table>
 </div>
-<div class="d-flex justify-content-center" *ngIf="pagination.totalItems>0 && !loading">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+<div class="d-flex justify-content-center" *ngIf="pagination?.totalItems>0 && !loading">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination?.totalItems" [itemsPerPage]="pagination?.itemsPerPage"
         [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
         nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
